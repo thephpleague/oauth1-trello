@@ -156,7 +156,7 @@ class TrelloTest extends \PHPUnit_Framework_TestCase
         $client = m::mock(ClientInterface::class);
         $client->shouldReceive('send')->with(m::on(function($request) {
             $this->assertEquals('https', $request->getUri()->getScheme());
-            $this->assertEquals('trello.com', $request->getUri()->getHost());
+            $this->assertEquals('api.trello.com', $request->getUri()->getHost());
             $this->assertEquals('/1/members/me', $request->getUri()->getPath());
 
             return true;

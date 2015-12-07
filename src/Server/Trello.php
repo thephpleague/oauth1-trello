@@ -67,7 +67,7 @@ class Trello extends AbstractServer
      * details request.
      *
      * @param  array $response
-     * @param  TokenCredentials $token
+     * @param  TokenCredentials $tokenCredentials
      *
      * @return ResourceOwnerInterface
      */
@@ -101,7 +101,7 @@ class Trello extends AbstractServer
      * @param  string            $url
      * @param  TokenCredentials  $tokenCredentials
      *
-     * @return Psr\Http\Message\RequestInterface
+     * @return GuzzleHttp\Psr7\Request
      */
     public function getAuthenticatedRequest($method, $url, TokenCredentials $tokenCredentials)
     {
@@ -155,6 +155,6 @@ class Trello extends AbstractServer
      */
     protected function getResourceOwnerDetailsUrl(TokenCredentials $tokenCredentials)
     {
-        return 'https://trello.com/1/members/me?'.$this->getAuthenticatedQueryString($tokenCredentials);
+        return 'https://api.trello.com/1/members/me?'.$this->getAuthenticatedQueryString($tokenCredentials);
     }
 }
