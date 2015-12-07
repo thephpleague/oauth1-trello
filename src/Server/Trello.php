@@ -9,6 +9,27 @@ use Psr\Http\Message\ResponseInterface;
 class Trello extends AbstractServer
 {
     /**
+     * Requested token expiration
+     *
+     * @var string
+     */
+    protected $expiration;
+
+    /**
+     * Application name displayed to authenticating user
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * Requested token scope
+     *
+     * @var string
+     */
+    protected $scope;
+
+    /**
      * Build authorization query parameters.
      *
      * @param  array $options
@@ -19,12 +40,12 @@ class Trello extends AbstractServer
     {
         $params = array(
             'response_type' => 'fragment',
-            'scope' => '',
-            'expiration' => '',
-            'name' => '',
+            'scope' => isset($options['scope']) ? $options['scope'] : $this->scope,
+            'expiration' => isset($options['expiration']) ? $options['expiration'] : $this->expiration,
+            'name' => isset($options['name']) ? $options['name'] : $this->name,
         );
 
-        return http_build_query($params);
+        return http_build_query(array_filter($params));
     }
 
     /**
@@ -56,14 +77,55 @@ class Trello extends AbstractServer
     }
 
     /**
+     * Creates an authenticated query string and merges with a given query string,
+     * if provided.
+     *
+     * @param  TokenCredentials  $tokenCredentials
+     * @param  string            $query
+     *
+     * @return string
+     */
+    protected function getAuthenticatedQueryString(TokenCredentials $tokenCredentials, $query = '')
+    {
+        $query = parse_str($query);
+        $query['key'] = (string) $this->clientCredentials;
+        $query['token'] = (string) $tokenCredentials;
+
+        return http_build_query($query);
+    }
+
+    /**
+     * Creates a new authenticated request.
+     *
+     * @param  string            $method
+     * @param  string            $url
+     * @param  TokenCredentials  $tokenCredentials
+     *
+     * @return Psr\Http\Message\RequestInterface
+     */
+    public function getAuthenticatedRequest($method, $url, TokenCredentials $tokenCredentials)
+    {
+        $request = parent::getAuthenticatedRequest($method, $url, $tokenCredentials);
+
+        $uri = $request->getUri()->withQuery(
+            $this->getAuthenticatedQueryString(
+                $tokenCredentials,
+                $request->getUri()->getQuery()
+            )
+        );
+
+        return $request->withUri($uri);
+    }
+
+    /**
      * Gets the URL for redirecting the resource owner to authorize the client.
      *
      * @return string
      */
-    protected function getBaseAuthorizationUrl()//array $options = array())
+    protected function getBaseAuthorizationUrl(array $options = array())
     {
         return 'https://trello.com/1/OAuthAuthorizeToken?'.
-            $this->buildAuthorizationQueryParameters();
+            $this->buildAuthorizationQueryParameters($options);
     }
 
     /**
@@ -91,9 +153,8 @@ class Trello extends AbstractServer
      *
      * @return string
      */
-    protected function getResourceOwnerDetailsUrl()//TokenCredentials $tokenCredentials)
+    protected function getResourceOwnerDetailsUrl(TokenCredentials $tokenCredentials)
     {
-        return 'https://trello.com/1/members/me?key='.$this->clientCredentials->getIdentifier().
-            '&token='.$tokenCredentials->getIdentifier();
+        return 'https://trello.com/1/members/me?'.$this->getAuthenticatedQueryString($tokenCredentials);
     }
 }

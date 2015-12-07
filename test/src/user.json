@@ -1,0 +1,45 @@
+{
+    "id": "545df696e29c0dddaed31967",
+    "avatarHash": null,
+    "bio": "I have magical powers",
+    "bioData": null,
+    "confirmed": true,
+    "fullName": "Matilda Wormwood",
+    "idPremOrgsAdmin": [],
+    "initials": "MW",
+    "memberType": "normal",
+    "products": [],
+    "status": "idle",
+    "url": "https://trello.com/matildawormwood12",
+    "username": "matildawormwood12",
+    "avatarSource": "none",
+    "email": null,
+    "gravatarHash": "39aaaada0224f26f0bb8f1965326dcb7",
+    "idBoards": [
+        "545df696e29c0dddaed31968",
+        "545e01d6c7b2dd962b5b46cb"
+    ],
+    "idOrganizations": [
+        "54adfd79f9aea14f84009a85",
+        "54adfde13b0e706947bc4789"
+    ],
+    "loginTypes": null,
+    "oneTimeMessagesDismissed": [],
+    "prefs": {
+        "sendSummaries": true,
+        "minutesBetweenSummaries": 1,
+        "minutesBeforeDeadlineToNotify": 1440,
+        "colorBlind": false,
+        "timezoneInfo": {
+            "timezoneNext": "CDT",
+            "dateNext": "2015-03-08T08:00:00.000Z",
+            "offsetNext": 300,
+            "timezoneCurrent": "CST",
+            "offsetCurrent": 360
+        }
+    },
+    "trophies": [],
+    "uploadedAvatarHash": null,
+    "premiumFeatures": [],
+    "idBoardsPinned": null
+}
