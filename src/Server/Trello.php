@@ -155,6 +155,6 @@ class Trello extends AbstractServer
      */
     protected function getResourceOwnerDetailsUrl(TokenCredentials $tokenCredentials)
     {
-        return 'https://trello.com/1/members/me?'.$this->getAuthenticatedQueryString($tokenCredentials);
+        return 'https://api.trello.com/1/members/me?'.$this->getAuthenticatedQueryString($tokenCredentials);
     }
 }
