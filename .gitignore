@@ -1,4 +1,5 @@
 /build
+/example
 /vendor
 composer.phar
 composer.lock

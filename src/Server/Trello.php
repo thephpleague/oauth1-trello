@@ -2,7 +2,6 @@
 
 namespace League\OAuth1\Client\Server;
 
-use League\OAuth1\Client\Exceptions\IdentityProviderException;
 use League\OAuth1\Client\Credentials\TokenCredentials;
 use Psr\Http\Message\ResponseInterface;
 
@@ -101,7 +100,7 @@ class Trello extends AbstractServer
      * @param  string            $url
      * @param  TokenCredentials  $tokenCredentials
      *
-     * @return GuzzleHttp\Psr7\Request
+     * @return \GuzzleHttp\Psr7\Request
      */
     public function getAuthenticatedRequest($method, $url, TokenCredentials $tokenCredentials)
     {
