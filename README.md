@@ -176,6 +176,20 @@ $response = $client->send($request);
 
 ```
 
+### Running the included example
+
+This project contains some example code within the `example` directory at the root of this project.
+
+First, open the `example/index.php` file and update the server configuration with your Trello App Identifier and Secret.
+
+Then run the code in your browser. Using the built-in server provided by PHP may be the fastest options. From the command line, and at the root of the project running the following command.
+
+```bash
+php -S localhost:9000 -t example
+```
+
+The built-in web server should begin running and when you browse to [`http://localhost:9000`](http://localhost:9000) in your favorite browser, you can begin testing your configuration.
+
 ## Testing
 
 ``` bash
