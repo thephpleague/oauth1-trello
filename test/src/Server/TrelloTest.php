@@ -126,7 +126,10 @@ class TrelloTest extends \PHPUnit_Framework_TestCase
         $temporaryCredentials->shouldReceive('checkIdentifier')->with($temporaryIdentifier);
 
         $client = m::mock(ClientInterface::class);
-        $client->shouldReceive('send')->with(m::on(function($request) {
+        $client->shouldReceive('send')->with(m::on(function($request) use ($temporaryIdentifier, $verifier) {
+            $authorizationHeader = $request->getHeaders()['Authorization'][0];
+            $this->assertContains('oauth_token="'.$temporaryIdentifier.'"', $authorizationHeader);
+            $this->assertContains('oauth_verifier="'.$verifier.'"', $authorizationHeader);
             $this->assertEquals('https', $request->getUri()->getScheme());
             $this->assertEquals('trello.com', $request->getUri()->getHost());
             $this->assertEquals('/1/OAuthGetAccessToken', $request->getUri()->getPath());
